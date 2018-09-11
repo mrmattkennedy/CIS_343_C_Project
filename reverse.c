@@ -1,15 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include "file_utils.h"
 
 //Input file is arg 1, output file is arg 2.
-#define INPUT_FILE 1;
-#define OUTPUT_FILE 2;
+#define INPUT_FILE 1
+#define OUTPUT_FILE 2
 
 extern int errno;
-
-int read_file( char* filename, char **buffer );
-int write_file( char* filename, char *buffer, int size);
 
 int main (int argc, char** argv) {
 
@@ -22,33 +20,19 @@ int main (int argc, char** argv) {
 		printf("syntax: ./reverse [inputfile] [outputfile]\n");
 		return EXIT_FAILURE;
 	}
-	
-	read_file(*(argv+1), &buffer);
+	int size;	
+	if (errno == 0)
+		size = read_file(*(argv + INPUT_FILE), &buffer);
 
-
+	write_file (*(argv + OUTPUT_FILE), buffer, size);
 
 	if (errno != 0)
 	{
-		printf("\n\nError number is %d.\n", errno);
+		fprintf(stderr, "\n\nError number is %d.\n", errno);
 		perror("Error");
 		return errno;
 	}
 
 	return EXIT_SUCCESS;
-}
-
-int read_file (char* filename, char **buffer) {
-	FILE *fin = fopen(filename, "r");
-	char temp;
-
-	while (fscanf(fin, "%c", &temp) != EOF)
-	{
-		(*buffer)+=temp;
-	}
-	return errno;
-}
-
-int write_file( char* filename, char *buffer, int size) {
-	return errno;
 }
 
