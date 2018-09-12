@@ -20,19 +20,23 @@ int main (int argc, char** argv) {
 		printf("syntax: ./reverse [inputfile] [outputfile]\n");
 		return EXIT_FAILURE;
 	}
-	int size;	
-	if (errno == 0)
-		size = read_file(*(argv + INPUT_FILE), &buffer);
-
-	write_file (*(argv + OUTPUT_FILE), buffer, size);
-
+	int size = read_file(*(argv + INPUT_FILE), &buffer);
 	if (errno != 0)
 	{
-		fprintf(stderr, "\n\nError number is %d.\n", errno);
+		fprintf(stderr, "\n\nError present. errno is %d\n", errno);
 		perror("Error");
+		fprintf(stderr, "\n\n");
+		return errno;
+	}
+
+	write_file (*(argv + OUTPUT_FILE), buffer, size);
+	if (errno != 0)
+	{
+		fprintf(stderr, "\n\nError present. errno is %d\n", errno);
+		perror("Error");
+		fprintf(stderr, "\n\n");
 		return errno;
 	}
 
 	return EXIT_SUCCESS;
 }
-
