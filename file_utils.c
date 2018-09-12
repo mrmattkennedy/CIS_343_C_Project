@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <sys/stat.h>
 
 int read_file (char* filename, char **buffer) {
 	FILE *fin = fopen(filename, "r");
@@ -11,7 +12,9 @@ int read_file (char* filename, char **buffer) {
 	if (fin == NULL)
 		return errno;
 
-	off_t size = ftello(fin);
+	struct stat st;
+	stat(filename, &st);
+	int size = st.st_size;
 	
 	tempBuff = (char*)malloc(size * sizeof(char));
 	
@@ -28,14 +31,10 @@ int read_file (char* filename, char **buffer) {
 }
 
 int write_file( char* filename, char *buffer, int size) {
-	char *p1 = buffer;
-   	char *p2 = buffer + size - 1;
+	FILE *fout = fopen (filename, "w");
 
-	while (p1 < p2) {
-		char tmp = *p1;
-	        *p1++ = *p2;
-        	*p2-- = tmp;
-	}	
-	printf("%s\n", buffer);
+	for (int i = size - 1; i >= 0; i--)
+		fprintf(fout, "%c", buffer[i]);
+
 	return errno;
 }
