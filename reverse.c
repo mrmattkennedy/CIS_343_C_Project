@@ -20,6 +20,7 @@ int main (int argc, char** argv) {
 		printf("syntax: ./reverse [inputfile] [outputfile]\n");
 		return EXIT_FAILURE;
 	}
+
 	int size = read_file(*(argv + INPUT_FILE), &buffer);
 	if (errno != 0)
 	{

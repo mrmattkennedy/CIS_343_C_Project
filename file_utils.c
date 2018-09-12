@@ -27,6 +27,7 @@ int read_file (char* filename, char **buffer) {
 	}
 
 	*buffer = tempBuff;
+	//free(tempBuff);
 	return size;
 }
 
