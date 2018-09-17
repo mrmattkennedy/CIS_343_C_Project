@@ -22,19 +22,14 @@ int read_file (char* filename, char **buffer) {
 	//Declare vars to get the info from the file.
 	char* tempBuff;
 	int curr = 0;
-	//*buffer = (char *)malloc(size * sizeof(char));
 	tempBuff = (char *)malloc(size * sizeof(char));
 	
 	while (fscanf(fin, "%c", &temp) != EOF)
-	{	
-		//printf("Char is %s\n", *buffer);
 		tempBuff[curr++] = temp;
-		//**buffer = temp;
-	}
+
 	//De-reference pointer to pointer, left with pointer.
 	//Set pointer equal to tempBuff.
 	*buffer = tempBuff;
-	free(tempBuff);
 	fclose(fin);
 	return size;
 }
@@ -44,6 +39,7 @@ int write_file( char* filename, char *buffer, int size) {
 
 	for (int i = 0; i < size; i++)
 		fprintf(fout, "%c", buffer[i]);
+
 	fclose(fout);
 	return errno;
 }
