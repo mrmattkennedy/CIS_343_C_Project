@@ -29,8 +29,13 @@ int main (int argc, char** argv) {
 		fprintf(stderr, "\n\n");
 		return errno;
 	}
+	printf("Buffer is %s\n", buffer);
+	/*
+	char* bufferRev = (char*)malloc(size * sizeof(char));
+	for (int i = 0; i < size; i++)
+		bufferRev[size - 1 - i] = buffer[i];
 
-	write_file (*(argv + OUTPUT_FILE), buffer, size);
+	write_file (*(argv + OUTPUT_FILE), bufferRev, size);
 	if (errno != 0)
 	{
 		fprintf(stderr, "\n\nError present. errno is %d\n", errno);
@@ -38,6 +43,8 @@ int main (int argc, char** argv) {
 		fprintf(stderr, "\n\n");
 		return errno;
 	}
-
+	printf("%s\n%s\n", buffer, bufferRev);
+	free(bufferRev);
+	*/
 	return EXIT_SUCCESS;
 }
